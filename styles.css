@@ -6,6 +6,11 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
 .container {
   max-width: 960px;
   padding-inline: 10px;
@@ -98,6 +103,7 @@
 }
 
 .numbers,
+.decimal,
 .operators-top,
 .operators-right {
   display: flex;
@@ -124,7 +130,8 @@
   color: black;
 }
 
-.numbers {
+.numbers,
+.decimal {
   color: white;
 }
 
