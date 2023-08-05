@@ -103,7 +103,6 @@ input:focus {
 }
 
 .numbers,
-.decimal,
 .operators-top,
 .operators-right {
   display: flex;
