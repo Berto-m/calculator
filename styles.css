@@ -35,6 +35,7 @@ input:focus {
 /* START RESULT AND OPERATIONS */
 .result-wrapper {
   display: grid;
+  min-height: 10.25rem;
   grid-template-columns: repeat(2 1fr);
   grid-template-rows: 1fr 0.5fr 1fr;
 }
