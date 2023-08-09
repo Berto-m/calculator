@@ -3,6 +3,7 @@ const resultOperations = document.querySelector(".result-operations");
 const allBtns = document.querySelectorAll(
   ".numbers-and-operators-container input"
 );
+const dividedByZero = "🤦🏻‍♂️🤦🏽‍♀️";
 const allNumbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
 const allOperations = ["%", "/", "*", "x", "-", "+"];
 let firstNum = "";
@@ -14,17 +15,42 @@ if (resultNumbers.textContent.length > 7) {
   resultNumbers.style.fontSize = "2.4rem";
 }
 
-const mainResultHandler = () => {
-  if ((operators === "x" || operators === "*") && !mainResult) {
-    mainResult = parseInt(firstNum) * parseInt(secondNum);
+const mainResultHandler = (num1 = firstNum, num2 = secondNum) => {
+  num1 = parseFloat(num1);
+  num2 = parseFloat(num2);
+  if (!mainResult && (operators === "x" || operators === "*")) {
+    mainResult = num1 * num2;
   } else if (mainResult && (operators === "x" || operators === "*")) {
-    mainResult = mainResult * parseInt(secondNum);
+    mainResult = mainResult * num2;
+  } else if (!mainResult && operators === "+") {
+    mainResult = num1 + num2;
+  } else if (mainResult && operators === "+") {
+    mainResult = mainResult + num2;
+  } else if (!mainResult && operators === "-") {
+    mainResult = num1 - num2;
+  } else if (mainResult && operators === "-") {
+    mainResult = mainResult - num2;
+  } else if (!mainResult && operators === "%") {
+    mainResult = num1 / num2;
+    console.log(mainResult);
+  } else if (mainResult && operators === "%") {
+    mainResult = mainResult / num2;
+    console.log(mainResult);
+  }
+
+  if (Number.isInteger(mainResult)) {
+    console.log("im int");
+    console.log(mainResult);
+  } else {
+    console.log(`im float`);
+    console.log(mainResult);
   }
   console.log(mainResult);
+  secondNum = "";
 };
 
 // It needs check if there's already an operators in place
-// to update first or second second number. 
+// to update first or second second number.
 const updateNumbersHandler = (number) => {
   if (!operators) {
     firstNum += number;
@@ -32,7 +58,6 @@ const updateNumbersHandler = (number) => {
   } else {
     secondNum += number;
     resultNumbers.textContent = secondNum;
-    mainResultHandler();
   }
 };
 
@@ -50,18 +75,15 @@ const negateCurrentValue = () => {
 };
 
 // Must only work when a number is entered.
-// SecondNum must be emptied here so when a new operator is clicked
-// or pressed the mainResultHandler() doesn't use the old values from 
-// from SecondNum.can 
 const operatorsHandler = (currentOperator) => {
-  if (operators) {
+  if (operators && secondNum) {
+    mainResultHandler()
+    resultNumbers.textContent = `${mainResult}`
+  } else if (firstNum && currentOperator === '%') {
     operators = currentOperator;
-    secondNum = "";
-    console.log(operators);
-  } else if (firstNum) {
-    operators = currentOperator;
-    console.log(operators);
+    mainResultHandler(firstNum, secondNum=100);
   }
+  operators = currentOperator
 };
 
 // checks if it's a number or operator
@@ -86,7 +108,6 @@ const clickKeydownHandler = (event) => {
     }
   }
 };
-
 
 // It needs read whole page otherwise the buttons/inputs
 // would need to be in an active state.
