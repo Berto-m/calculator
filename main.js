@@ -5,7 +5,7 @@ const allBtns = document.querySelectorAll(
 );
 const dividedByZero = "🤦🏻‍♂️🤦🏽‍♀️";
 const allNumbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
-const allOperations = ["%", "/", "*", "x", "-", "+", "="];
+const allOperations = ["%", "/", "*", "x", "-", "+", "=", "AC", "+/-"];
 let firstNum = "";
 let operators = "";
 let secondNum = "";
@@ -79,16 +79,17 @@ const acButtonHandler = () => {
   resultOperations.textContent = "";
 };
 
-const negateCurrentValue = () => {
-  console.log("do something here");
-};
 
 // Must only work when a number is entered.
 const operatorsHandler = (currentOperator) => {
-  if (operators && secondNum) {
+  if (currentOperator === "AC") {
+    acButtonHandler();
+  } else if (operators && secondNum) {
     mainResultHandler();
   } else if (firstNum) {
-    if (currentOperator === "%") {
+    if (currentOperator === "+/-") {
+      firstNum = `${parseFloat(firstNum)*(-1)}`
+    } else if (currentOperator === "%") {
       operators = currentOperator;
       mainResultHandler(firstNum, (secondNum = 100));
     } else if (currentOperator != "=") {
@@ -105,10 +106,6 @@ const clickKeydownHandler = (event) => {
       allNumbers.includes(event.key)
     ) {
       updateNumbersHandler(event.target.value ?? event.key);
-    } else if (event.target.value === "AC") {
-      acButtonHandler();
-    } else if (event.target.value === "+/-") {
-      negateCurrentValue();
     } else if (
       allOperations.includes(event.target.value) ||
       allOperations.includes(event.key)
