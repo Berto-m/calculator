@@ -89,6 +89,7 @@ const operatorsHandler = (currentOperator) => {
   } else if (firstNum) {
     if (currentOperator === "+/-") {
       firstNum = `${parseFloat(firstNum)*(-1)}`
+      resultNumbers.textContent = firstNum
     } else if (currentOperator === "%") {
       operators = currentOperator;
       mainResultHandler(firstNum, (secondNum = 100));
