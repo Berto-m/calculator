@@ -5,7 +5,7 @@ const allBtns = document.querySelectorAll(
 );
 const dividedByZero = "🤦🏻‍♂️🤦🏽‍♀️";
 const allNumbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
-const allOperations = ["%", "/", "*", "x", "-", "+"];
+const allOperations = ["%", "/", "*", "x", "-", "+", "="];
 let firstNum = "";
 let operators = "";
 let secondNum = "";
@@ -36,6 +36,15 @@ const mainResultHandler = (num1 = firstNum, num2 = secondNum) => {
   } else if (mainResult && operators === "%") {
     mainResult = mainResult / num2;
     console.log(mainResult);
+  } else if (!mainResult && operators === "/") {
+    mainResult = num1 / num2;
+  } else if (mainResult && operators === "/") {
+    if (num2 === 0) {
+      acButtonHandler();
+      resultNumbers.textContent = "🤦🏻‍♂️🤦🏽‍♀️";
+    } else {
+      mainResult = mainResult / num2;
+    }
   }
 
   if (Number.isInteger(mainResult)) {
@@ -45,7 +54,7 @@ const mainResultHandler = (num1 = firstNum, num2 = secondNum) => {
     console.log(`im float`);
     console.log(mainResult);
   }
-  console.log(mainResult);
+  console.log(`main result handler ${mainResult}`);
   secondNum = "";
 };
 
@@ -77,13 +86,15 @@ const negateCurrentValue = () => {
 // Must only work when a number is entered.
 const operatorsHandler = (currentOperator) => {
   if (operators && secondNum) {
-    mainResultHandler()
-    resultNumbers.textContent = `${mainResult}`
-  } else if (firstNum && currentOperator === '%') {
-    operators = currentOperator;
-    mainResultHandler(firstNum, secondNum=100);
+    mainResultHandler();
+  } else if (firstNum) {
+    if (currentOperator === "%") {
+      operators = currentOperator;
+      mainResultHandler(firstNum, (secondNum = 100));
+    } else if (currentOperator != "=") {
+      operators = currentOperator;
+    }
   }
-  operators = currentOperator
 };
 
 // checks if it's a number or operator
@@ -103,8 +114,6 @@ const clickKeydownHandler = (event) => {
       allOperations.includes(event.key)
     ) {
       operatorsHandler(event.target.value ?? event.key);
-    } else if (event.target.value == "=") {
-      console.log("hello");
     }
   }
 };
