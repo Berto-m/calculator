@@ -12,8 +12,17 @@ let secondNum = "";
 let mainResult = 0;
 
 if (resultNumbers.textContent.length > 7) {
-  resultNumbers.style.fontSize = "2.4rem";
+  resultNumbers.style.fontSize = "2.1rem";
 }
+
+const checkNumSize = (num) => {
+  strNum = num.toString();
+  console.log(strNum);
+  console.log(typeof strNum);
+  console.log(strNum.length);
+};
+
+checkNumSize(100);
 
 const mainResultHandler = (num1 = firstNum, num2 = secondNum) => {
   num1 = parseFloat(num1);
@@ -61,12 +70,14 @@ const mainResultHandler = (num1 = firstNum, num2 = secondNum) => {
   }
   console.log(`main result handler ${mainResult}`);
   secondNum = "";
+
+  resultNumbers.textContent = `${mainResult}`;
 };
 
 // It needs check if there's already an operators in place
 // to update first or second second number
 const updateNumbersHandler = (number) => {
-  if (!operators) {
+  if (!operators && firstNum.length < 12) {
     if (number === ".") {
       if (!firstNum) {
         firstNum += "0";
@@ -78,7 +89,7 @@ const updateNumbersHandler = (number) => {
     }
     firstNum += number;
     resultNumbers.textContent = firstNum;
-  } else {
+  } else if (operators && secondNum.length < 12) {
     if (number === ".") {
       if (!secondNum) {
         secondNum += "0";
