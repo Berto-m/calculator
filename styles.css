@@ -36,7 +36,7 @@ input:focus {
 .result-wrapper {
   display: grid;
   min-height: 10.25rem;
-  grid-template-columns: repeat(2 1fr);
+  grid-template-columns: 1fr;
   grid-template-rows: 1fr 0.5fr 1fr;
 }
 
@@ -56,9 +56,9 @@ input:focus {
 }
 
 .result-operations {
-  direction: rtl;
   color: #a5a5a5;
   word-break: break-all;
+  justify-content: flex-end;
 }
 
 /* start icons */
@@ -75,21 +75,8 @@ input:focus {
   color: white;
 }
 
-.btn-icon-backspace,
-.btn-icon-bulb {
+.btn-icon-backspace {
   font-size: 1.5rem;
-}
-
-.box-bulb {
-  display: flex;
-  align-items: start;
-  padding: 0.3rem 0 0 0.3rem;
-}
-
-.btn-bulb {
-  background-color: transparent;
-  border: none;
-  color: white;
 }
 /* end icons */
 /* END RESULT AND OPERATIONS */

@@ -1,3 +1,4 @@
+const delBtn = document.querySelector("#del-icon");
 const resultNumbers = document.querySelector(".result-numbers");
 const resultOperations = document.querySelector(".result-operations");
 const decimalBtn = document.querySelector(".decimal");
@@ -6,6 +7,7 @@ const allBtns = document.querySelectorAll(
 );
 const allNumbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
 const allOperations = ["%", "/", "*", "x", "-", "+", "=", "AC", "+/-"];
+const arrNumbers = [];
 let firstNum = "";
 let operators = "";
 let secondNum = "";
@@ -15,18 +17,14 @@ if (resultNumbers.textContent.length > 7) {
   resultNumbers.style.fontSize = "2.1rem";
 }
 
-const checkNumSize = (num) => {
-  strNum = num.toString();
-  console.log(strNum);
-  console.log(typeof strNum);
-  console.log(strNum.length);
-};
-
-checkNumSize(100);
-
 const mainResultHandler = (num1 = firstNum, num2 = secondNum) => {
   num1 = parseFloat(num1);
   num2 = parseFloat(num2);
+  if (!mainResult) {
+    resultOperations.textContent = `${num1} ${operators} ${num2}`;
+  } else {
+    resultOperations.textContent = `${mainResult} ${operators} ${num2}`;
+  }
   if (!mainResult && (operators === "x" || operators === "*")) {
     mainResult = num1 * num2;
   } else if (mainResult && (operators === "x" || operators === "*")) {
@@ -133,10 +131,23 @@ const operatorsHandler = (currentOperator) => {
   decimalBtn.disabled = false;
 };
 
+const delBtnHandler = () => {
+  if (secondNum) {
+    secondNum = secondNum.slice(0, -1);
+    resultNumbers.textContent = secondNum;
+  } else if (firstNum) {
+    firstNum = firstNum.slice(0, -1);
+    resultNumbers.textContent = firstNum;
+  }
+};
+
 // checks if it's a number or operator
 const clickKeydownHandler = (event) => {
+  console.log(event);
   if (event.type === "keydown" || event.type === "click") {
-    if (
+    if (event.key === "Backspace" || event.target === delBtn) {
+      delBtnHandler();
+    } else if (
       allNumbers.includes(event.target.value) ||
       allNumbers.includes(event.key)
     ) {
@@ -149,6 +160,7 @@ const clickKeydownHandler = (event) => {
       decimalBtn.disable = true;
     }
   }
+  event.target.blur()
 };
 
 // It needs read whole page otherwise the buttons/inputs
