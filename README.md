@@ -1,4 +1,4 @@
 # Calculator
 
 ## Credits
-- Inspired by Apple
+- Inspired by Apple 
