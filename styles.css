@@ -90,6 +90,15 @@ input:focus {
   font-size: 1.5rem;
 }
 
+.numbers-and-operators-container input:hover {
+  filter: brightness(150%);
+}
+
+.numbers-and-operators-container > .operators-right:hover {
+  background-color: white;
+  color: #ba6900;
+}
+
 .numbers,
 .operators-top,
 .operators-right {
@@ -128,6 +137,7 @@ input:focus {
   font-size: 1.8rem;
   padding-bottom: 0.32rem;
 }
+
 /* END NUMBERS */
 
 /* START FOOTER */

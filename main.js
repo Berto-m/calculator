@@ -7,7 +7,6 @@ const allBtns = document.querySelectorAll(
 );
 const allNumbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
 const allOperations = ["%", "/", "*", "x", "-", "+", "=", "AC", "+/-", "Enter"];
-const arrNumbers = [];
 let firstNum = "";
 let operators = "";
 let secondNum = "";
@@ -62,7 +61,7 @@ const mainResultHandler = (num1 = firstNum, num2 = secondNum) => {
   }
 
   if (mainResult > 999999999 || mainResult < -999999999) {
-    mainResult = mainResult.toExponential()
+    mainResult = mainResult.toExponential();
     resultNumbers.textContent = `${checkNumLength(mainResult)}`;
   } else if (Number.isInteger(mainResult)) {
     resultNumbers.textContent = `${checkNumLength(mainResult)}`;
@@ -71,13 +70,14 @@ const mainResultHandler = (num1 = firstNum, num2 = secondNum) => {
     resultNumbers.textContent = `${checkNumLength(mainResult)}`;
   }
   secondNum = "";
+  
 };
 
 // It needs check if there's already an operators in place
 // to update first or second second number.
 // decimal must disabled after it's been clicked
 const updateNumbersHandler = (number) => {
-  if (!operators && firstNum.length < 10) {
+ if (!operators && firstNum.length < 10) {
     if (number === ".") {
       if (!firstNum) {
         firstNum += "0";
@@ -133,20 +133,15 @@ const operatorsHandler = (currentOperator) => {
       operators = currentOperator;
     }
   }
-  decimalBtn.disabled = false;
 };
 
 const delBtnHandler = () => {
   if (mainResult) {
-    secondNum = secondNum.slice(0, -1);
-    resultNumbers.textContent = `${checkNumLength(secondNum)}`;
+    acButtonHandler();
   } else if (secondNum) {
     secondNum = secondNum.slice(0, -1);
     resultNumbers.textContent = `${checkNumLength(secondNum)}`;
   } else if (firstNum) {
-    if (!firstNum) {
-      delBtn.disabled = true;
-    }
     firstNum = firstNum.slice(0, -1);
     resultNumbers.textContent = `${checkNumLength(firstNum)}`;
   }
@@ -162,6 +157,7 @@ const clickKeydownHandler = (event) => {
       allNumbers.includes(event.target.value) ||
       allNumbers.includes(event.key)
     ) {
+      console.log(event.target);
       updateNumbersHandler(event.target.value ?? event.key);
     } else if (
       allOperations.includes(event.target.value) ||
