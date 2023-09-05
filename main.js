@@ -17,6 +17,7 @@ const deleteAll = () => {
   secondNum = "";
   resultOperations.textContent = "";
   resultNumbers.textContent = "";
+  decimalBtn.disabled = false;
 };
 
 const styleCurrentNumber = (num) => {
