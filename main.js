@@ -143,12 +143,12 @@ const addDecimal = () => {
 };
 
 const oppositeNum = () => {
-  if (!operator) {
+  if (!operator && firstNum) {
     firstNum = `${parseFloat(firstNum) * -1}`;
     resultNumbers.textContent = `${styleCurrentNumber(firstNum)}`;
     resultOperations.textContent = `${firstNum}`;
     console.log(firstNum);
-  } else {
+  } else if (secondNum && secondNum) {
     secondNum = `${parseFloat(secondNum) * -1}`;
     resultNumbers.textContent = `${styleCurrentNumber(secondNum)}`;
     resultOperations.textContent = `${firstNum} ${operator} ${secondNum}`;
@@ -157,7 +157,6 @@ const oppositeNum = () => {
 
 // checks if it's a number or operator
 const clickKeydownHandler = (event) => {
-  console.log(event);
   if (event.type === "keydown" || event.type === "click") {
     if (event.target.value === "." || event.key === ".") {
       addDecimal();
