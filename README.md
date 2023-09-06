@@ -2,7 +2,7 @@
 
 **Live Demo:** https://albertomdev.github.io/calculator/
 
-![showcase](img/calculator-showcase.png)
+<img src="img/calculator-showcase.png" height="500">
 
 This project is part of The Odin Project curriculum.
 
