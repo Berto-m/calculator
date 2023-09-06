@@ -1,6 +1,6 @@
 # Calculator
 
-Live Demo: https://albertomdev.github.io/calculator/
+**Live Demo:** https://albertomdev.github.io/calculator/
 
 This project is part of The Odin Project curriculum.
 
