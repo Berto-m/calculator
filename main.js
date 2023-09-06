@@ -56,11 +56,14 @@ const calculateResult = (num1, action, num2) => {
   secondNum = "";
 };
 
+// needs to compare the displayed numbers against the firstNum
+// or secondNum, else it will delete secondNum and continue with firstNum
 const deleteCurrentNumber = () => {
   if (firstNum === resultNumbers.textContent) {
     firstNum = firstNum.slice(0, -1);
     resultNumbers.textContent = `${styleCurrentNumber(firstNum)}`;
     resultOperations.textContent = `${firstNum}`;
+    console.log(firstNum);
   } else if (secondNum === resultNumbers.textContent) {
     secondNum = secondNum.slice(0, -1);
     resultNumbers.textContent = `${styleCurrentNumber(secondNum)}`;
@@ -68,6 +71,9 @@ const deleteCurrentNumber = () => {
   }
 };
 
+// The result of diving zero needs to be here otherwise it throws an error
+// since the result is calculated when the user clicks on an operators
+// the percentage sign had to be done here since that's how the iPhone does ti
 const newOperator = (action) => {
   decimalBtn.disabled = false;
   decimalCounter = 0;
@@ -93,6 +99,9 @@ const newOperator = (action) => {
   }
 };
 
+// Decided to separate the = operator because, it will either mess up the
+// newOperator function by making too big as the that function also shows
+// the chained operations
 const equalEnter = () => {
   if (firstNum && secondNum) {
     if ((firstNum === "0" || secondNum === "0") && operator === "/") {
@@ -109,6 +118,7 @@ const equalEnter = () => {
   }
 };
 
+// length check must be done here too to avoid overflowing
 const updateNumber = (num) => {
   if (!operator) {
     if (firstNum.length < 11) {
@@ -126,6 +136,7 @@ const updateNumber = (num) => {
   console.log(firstNum);
 };
 
+// Isolated from updateNumber() purely for readability
 const addDecimal = () => {
   decimalBtn.disabled = true;
   if (!operator) {
@@ -143,20 +154,24 @@ const addDecimal = () => {
   }
 };
 
+// even though this function displays the results like newOperator,
+// this operator should be performed immediately and not wait for secondNum
 const oppositeNum = () => {
   if (!operator && firstNum) {
     firstNum = `${parseFloat(firstNum) * -1}`;
     resultNumbers.textContent = `${styleCurrentNumber(firstNum)}`;
     resultOperations.textContent = `${firstNum}`;
     console.log(firstNum);
-  } else if (secondNum && secondNum) {
+  } else if (secondNum) {
     secondNum = `${parseFloat(secondNum) * -1}`;
     resultNumbers.textContent = `${styleCurrentNumber(secondNum)}`;
     resultOperations.textContent = `${firstNum} ${operator} ${secondNum}`;
   }
 };
 
-// checks if it's a number or operator
+// checks if it's a number or operator.
+// Because the buttons are inputs they need to be unfocus before entering
+// an new number hence blur()
 const clickKeydownHandler = (event) => {
   if (event.type === "keydown" || event.type === "click") {
     if (event.target.value === "." || event.key === ".") {
